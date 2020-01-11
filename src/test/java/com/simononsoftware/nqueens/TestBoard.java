@@ -110,7 +110,7 @@ public class TestBoard {
 
         List<Board> boards = Arrays.asList(board1, board2, board3, board4);
 
-        BitSet result = Board.combineBitboards(boards);
+        BitSet result = Board.combineBitboards(boards, 4);
 
         int[] setBits = result.stream().toArray();
         int[] expectedBits = {3, 6, 7, 18};
@@ -120,6 +120,18 @@ public class TestBoard {
         Field[] expectedFields = {field1, field2, field3, field4};
 
         assertArrayEquals(expectedFields, fields.toArray());
+    }
+
+    @Test
+    public void testBuildingBoardFromFields() {
+
+        List<Field> fields = Arrays.asList(
+                new Field(0,1), new Field(2,3)
+        );
+
+        Board board = Board.buildFromFields(fields, 4);
+
+
     }
 
 }

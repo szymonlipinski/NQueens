@@ -50,8 +50,8 @@ public class Board {
      * @param boards Boards to combine the bitboards to.
      * @return Bitboard with set fields from all the bitboards.
      */
-    static BitSet combineBitboards(List<Board> boards) {
-        BitSet result = new BitSet(boards.get(0).size);
+    static BitSet combineBitboards(List<Board> boards, int size) {
+        BitSet result = new BitSet(size);
         boards.stream().map(board -> board.bitboard).forEach(result::or);
         return result;
     }
@@ -64,6 +64,19 @@ public class Board {
      */
     static List<Field> getSetFields(List<Board> boards) {
         return boards.stream().map(board -> board.field).collect(Collectors.toList());
+    }
+
+    /**
+     * Builds a board from the list of fields.
+     *
+     * @param fields List of fields to set on the board.
+     * @param size   Size of the board.
+     * @return Board with the fields set.
+     */
+    public static Board buildFromFields(List<Field> fields, int size) {
+        Board board = new Board(size);
+        fields.forEach(board::markFieldSet);
+        return board;
     }
 
     /**
@@ -253,5 +266,13 @@ public class Board {
         output.append("\n");
 
         return output.toString();
+    }
+
+    public BitSet getBitboard() {
+        return bitboard;
+    }
+
+    public Field getField() {
+        return field;
     }
 }
