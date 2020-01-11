@@ -43,17 +43,25 @@ public class NQueensSolver {
     public Optional<Board> findSolution() {
         List<Board> boards = new ArrayList<Board>(size);
 
-        while (true) {
+        // TODO remove it
+        // while (true) {
+        for (int a = 0; a < 30; a++) {
             boolean foundNewField = findNextEmptyFieldInColumn(boards, boards.size());
             if (foundNewField) {
+
+                System.out.println(String.format(">>> Found a new field %s", boards.get(boards.size() - 1).getField()));
+                System.out.println(Board.buildFromFields(Board.getSetFields(boards), size));
+
                 if (boards.size() == size) {
                     return Optional.of(Board.buildFromFields(Board.getSetFields(boards), size));
                 }
                 continue;
             } else {
+                System.out.println(">>> Didn't find a new field");
                 if (boards.size() == 0) {
                     break;
                 }
+                System.out.println(Board.buildFromFields(Board.getSetFields(boards), size));
                 findNextEmptyFieldInColumn(boards, boards.size() - 1);
             }
         }
@@ -63,29 +71,35 @@ public class NQueensSolver {
 
     boolean findNextEmptyFieldInColumn(List<Board> boards, int column) {
 
+        System.out.println(String.format("Called findNextEmptyFieldInColumn(column=%d)", column));
+
         boolean theColumnExists = column < boards.size();
         Field lastField = new Field(column, -1);
 
         if (theColumnExists) {
             lastField = boards.get(column).getField();
-            boards.remove(boards.subList(column, boards.size() - 1));
+            for (int i = boards.size() - 1; i >= column; i--) {
+                System.out.println(String.format("Removing column %d", i));
+                boards.remove(i);
+            }
         }
 
-        System.out.println(lastField);
+        System.out.println(String.format("lastField; %s", lastField));
 
         // all the previous bitboards combined to get a list of controlled fields
         BitSet combinedBoards = Board.combineBitboards(boards, size);
 
         // get number of queens already set
-        int nextQueenFile = boards.size();
+        // int nextQueenFile = boards.size();
 
         // find field to place the queen in the next column
         for (int i = lastField.getRank() + 1; i < size; i++) {
             Board newQueenBoard = new Board(size);
-            Field nextQueenField = new Field(nextQueenFile, i);
+            Field nextQueenField = new Field(lastField.getFile(), i);
+            System.out.println(String.format("nextQueenField; %s", nextQueenField));
             newQueenBoard.setField(nextQueenField);
             if (newQueenBoard.getBitboard().intersects(combinedBoards)) {
-                // this means the new queen is placed on an already controller field
+                // this means the new queen is placed on an already controlled field
                 // TODO add checking lines
                 continue;
             } else {
@@ -99,95 +113,4 @@ public class NQueensSolver {
         return false;
     }
 
-//    /**
-//     * Every queen will be in one column, so it's enough to iterate through the columns to find the good place
-//     * of placing the queens.
-//     *
-//     * @return If a solution is found - a Board with the positions of the queens. If is not found - an empty Board.
-//     */
-//    public Board findSolution() {
-//
-//        Board board = new Board(size);
-//
-//        for (int rank = 0; rank < size; rank++) { // ranks aka rows
-//            for (int file = 0; file < size; file++) { // files aka columns
-//                Field field = new Field(rank, file);
-//                if (checkAddingQueen(board, field)) {
-//                    addQueenToBoard(board, field);
-//                    System.out.println(String.format("Added queen to field %s", field));
-//
-//                    // check if we added all N queens
-//                    if (board.getQueensNumber() == size) return board;
-//                }
-//            }
-//        }
-//
-//        System.out.print(board.getQueensNumber());
-//        if (board.getQueensNumber() != size) {
-//            return Board.emptyBoard();
-//        }
-//
-//        return board;
-//    }
-//
-//
-//    /**
-//     * Checks if a queen can be added to this field.
-//     *
-//     * @param board Board to add the queen to.
-//     * @param field Field to check.
-//     * @return True if the queen can be added at the field, false otherwise.
-//     */
-//    private boolean checkAddingQueen(Board board, Field field) {
-//
-//        // queen cannot be places on a field that a queen already is placed
-//        if (board.isSet(field)) return false;
-//
-//        for (Line line : lines) {
-//            if (checkFieldIsOnLine(field, line)) return false;
-//        }
-//
-//        for (Integer rank : ranks) {
-//            if (checkFieldIsOnRank(field, rank)) return false;
-//        }
-//
-//        for (Integer file : files) {
-//            if (checkFieldIsOnFile(field, file)) return false;
-//        }
-//
-//        System.out.print(lines);
-//
-//        return true;
-//    }
-//
-//    /**
-//     * Checks if the given field is on the given line.
-//     *
-//     * @param field
-//     * @param line
-//     * @return
-//     */
-//    private boolean checkFieldIsOnLine(Field field, Line line) {
-//        return field.getRank() == field.getFile() * line.getA() + line.getB();
-//    }
-//
-//    private boolean checkFieldIsOnFile(Field field, Integer file) {
-//        return field.getFile() == file;
-//    }
-//
-//    private boolean checkFieldIsOnRank(Field field, Integer rank) {
-//        return field.getRank() == rank;
-//    }
-//
-//    private void addQueenToBoard(Board board, Field field) {
-//        files.add(field.getFile());
-//        ranks.add(field.getRank());
-//
-//        // add diagonal lines for this new queen
-//        lines.add(new Line(+1, field.getRank() - field.getFile()));
-//        lines.add(new Line(-1, field.getRank() + field.getFile()));
-//
-//        // board.getAllPieces();
-//        board.set(field);
-//    }
 }

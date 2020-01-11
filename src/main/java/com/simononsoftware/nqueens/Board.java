@@ -2,6 +2,7 @@ package com.simononsoftware.nqueens;
 
 import java.util.BitSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -274,5 +275,20 @@ public class Board {
 
     public Field getField() {
         return field;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return size == board.size &&
+                Objects.equals(field, board.field) &&
+                Objects.equals(bitboard, board.bitboard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, field, bitboard);
     }
 }
