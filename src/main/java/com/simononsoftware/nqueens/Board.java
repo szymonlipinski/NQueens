@@ -1,9 +1,9 @@
 package com.simononsoftware.nqueens;
 
-import java.util.BitSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.*;
 
 
 /**
@@ -290,5 +290,14 @@ public class Board {
     @Override
     public int hashCode() {
         return Objects.hash(size, field, bitboard);
+    }
+
+    public List<Field> getFields() {
+        List<Field> result = new ArrayList<Field>();
+        for (int i = bitboard.nextSetBit(0); i != -1; i = bitboard.nextSetBit(i + 1)) {
+            result.add(bitboardIndexToField(i));
+        }
+        sort(result);
+        return result;
     }
 }

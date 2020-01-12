@@ -43,10 +43,13 @@ public class NQueensSolver {
     public Optional<Board> findSolution() {
         List<Board> boards = new ArrayList<Board>(size);
 
+        int lastSearchedColumn = 0;
+
         // TODO remove it
         // while (true) {
         for (int a = 0; a < 30; a++) {
-            boolean foundNewField = findNextEmptyFieldInColumn(boards, boards.size());
+
+            boolean foundNewField = findNextEmptyFieldInColumn(boards, lastSearchedColumn);
             if (foundNewField) {
 
                 System.out.println(String.format(">>> Found a new field %s", boards.get(boards.size() - 1).getField()));
@@ -55,14 +58,14 @@ public class NQueensSolver {
                 if (boards.size() == size) {
                     return Optional.of(Board.buildFromFields(Board.getSetFields(boards), size));
                 }
-                continue;
+                lastSearchedColumn++;
             } else {
                 System.out.println(">>> Didn't find a new field");
-                if (boards.size() == 0) {
+                if (lastSearchedColumn == 0) {
                     break;
                 }
                 System.out.println(Board.buildFromFields(Board.getSetFields(boards), size));
-                findNextEmptyFieldInColumn(boards, boards.size() - 1);
+                lastSearchedColumn--;
             }
         }
 
@@ -100,9 +103,11 @@ public class NQueensSolver {
             newQueenBoard.setField(nextQueenField);
             if (newQueenBoard.getBitboard().intersects(combinedBoards)) {
                 // this means the new queen is placed on an already controlled field
-                // TODO add checking lines
                 continue;
             } else {
+                // TODO add checking lines
+                checkLines(boards, nextQueenField);
+
                 // we have a good place, add the field, and go to the next column
                 newQueenBoard.setControlledFields(nextQueenField);
                 boards.add(newQueenBoard);
@@ -112,5 +117,14 @@ public class NQueensSolver {
         // found no valid fields for this column
         return false;
     }
+
+    private void checkLines(List<Board> boards, Field nextQueenField) {
+        List<Field> fields = Board.getSetFields(boards);
+        fields.add(nextQueenField);
+        for (int i = 0 ; i < fields.size() ; i++) {
+            
+        }
+    }
+
 
 }
