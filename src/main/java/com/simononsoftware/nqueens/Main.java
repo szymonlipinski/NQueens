@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * The main class to run the code from console.
@@ -12,7 +13,7 @@ public class Main {
 
     public static void main(String args[]) throws IOException {
         System.out.println("Program for solving the n-queens problem.\n\n" +
-                "  Place N queens on an NxN chess board so that none of them attack each other (the classic n-queens problem). " +
+                "  Place N queens on an NxN chess board so that none of them attack each other (the classic n-queens problem)." +
                 "  Additionally, please make sure that no three queens are in a straight line at ANY angle, " +
                 "  so queens on A1, C2 and E3, despite not attacking each other, form a straight line at some angle.\n\n");
 

@@ -14,3 +14,12 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+
+task run(type: JavaExec) {
+    group = 'Run'
+    description = 'Run the NQueens solver'
+
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.simononsoftware.nqueens.Main"
+}
