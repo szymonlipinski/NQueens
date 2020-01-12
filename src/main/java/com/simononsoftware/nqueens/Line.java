@@ -7,26 +7,26 @@ import java.util.Objects;
  */
 public class Line {
 
-    private final int a;
-    private final int b;
+    private final double a;
+    private final double b;
 
-    public Line(int a, int b) {
+    public Line(double a, double b) {
         this.a = a;
         this.b = b;
     }
 
-    public int getA() {
+    public double getA() {
         return a;
     }
 
-    public int getB() {
+    public double getB() {
         return b;
     }
 
     /**
      * Calculates the linear function value.
      */
-    int calculateValue(int x) {
+    double calculateValue(double x) {
         return a * x + b;
     }
 
@@ -46,6 +46,6 @@ public class Line {
 
     @Override
     public String toString() {
-        return String.format("y=%dx+%d", a, b);
+        return String.format("y=%fx+%f", a, b);
     }
 }

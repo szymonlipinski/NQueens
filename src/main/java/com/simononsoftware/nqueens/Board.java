@@ -195,8 +195,8 @@ public class Board {
         for (int i = 0; i < size; i++) {
 
             Field[] fields = {
-                    new Field(lineDecreasing.calculateValue(i), i),
-                    new Field(i, lineIncreasing.calculateValue(i))
+                    new Field((int) lineDecreasing.calculateValue(i), i),
+                    new Field(i, (int) lineIncreasing.calculateValue(i))
             };
 
             for (Field markField : fields) {
@@ -292,6 +292,11 @@ public class Board {
         return Objects.hash(size, field, bitboard);
     }
 
+    /**
+     * Returns a sorted list of all fields set in on the board.
+     *
+     * @return List of fields set in the board.
+     */
     public List<Field> getFields() {
         List<Field> result = new ArrayList<Field>();
         for (int i = bitboard.nextSetBit(0); i != -1; i = bitboard.nextSetBit(i + 1)) {

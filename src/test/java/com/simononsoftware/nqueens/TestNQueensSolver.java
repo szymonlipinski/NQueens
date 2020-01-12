@@ -39,6 +39,78 @@ public class TestNQueensSolver {
             new Field(2, 0),
             new Field(3, 2));
 
+    static String solutionFor8 = "" +
+            "7  | · · * · · · · · \n" +
+            "6  | · · · · · * · · \n" +
+            "5  | · · · · · · · * \n" +
+            "4  | · * · · · · · · \n" +
+            "3  | · · · * · · · · \n" +
+            "2  | * · · · · · · · \n" +
+            "1  | · · · · · · * · \n" +
+            "0  | · · · · * · · · \n" +
+            "   | 0 1 2 3 4 5 6 7 \n";
+
+    static List<Field> fieldsFor8 = Arrays.asList(
+            new Field(0, 2),
+            new Field(1, 4),
+            new Field(2, 7),
+            new Field(3, 3),
+            new Field(4, 0),
+            new Field(5, 6),
+            new Field(6, 1),
+            new Field(7, 5)
+    );
+
+    static String solutionFor9 = "" +
+            "8  | · · · · · * · · · \n" +
+            "7  | · · · · · · · * · \n" +
+            "6  | · · * · · · · · · \n" +
+            "5  | · · · · · · * · · \n" +
+            "4  | · · · · · · · · * \n" +
+            "3  | · * · · · · · · · \n" +
+            "2  | · · · · * · · · · \n" +
+            "1  | * · · · · · · · · \n" +
+            "0  | · · · * · · · · · \n" +
+            "   | 0 1 2 3 4 5 6 7 8 \n";
+
+    static List<Field> fieldsFor9 = Arrays.asList(
+            new Field(0, 1),
+            new Field(1, 3),
+            new Field(2, 6),
+            new Field(3, 0),
+            new Field(4, 2),
+            new Field(5, 8),
+            new Field(6, 5),
+            new Field(7, 7),
+            new Field(8, 4)
+    );
+
+    static String solutionFor10 = "" +
+            "9   | ·  ·  ·  ·  ·  *  ·  ·  ·  ·  \n" +
+            "8   | ·  ·  *  ·  ·  ·  ·  ·  ·  ·  \n" +
+            "7   | ·  ·  ·  ·  *  ·  ·  ·  ·  ·  \n" +
+            "6   | ·  ·  ·  ·  ·  ·  ·  ·  ·  *  \n" +
+            "5   | ·  ·  ·  ·  ·  ·  ·  *  ·  ·  \n" +
+            "4   | ·  ·  ·  *  ·  ·  ·  ·  ·  ·  \n" +
+            "3   | ·  *  ·  ·  ·  ·  ·  ·  ·  ·  \n" +
+            "2   | ·  ·  ·  ·  ·  ·  *  ·  ·  ·  \n" +
+            "1   | ·  ·  ·  ·  ·  ·  ·  ·  *  ·  \n" +
+            "0   | *  ·  ·  ·  ·  ·  ·  ·  ·  ·  \n" +
+            "    | 0  1  2  3  4  5  6  7  8  9  \n";
+
+    static List<Field> fieldsFor10 = Arrays.asList(
+            new Field(0, 0),
+            new Field(1, 3),
+            new Field(2, 8),
+            new Field(3, 4),
+            new Field(4, 7),
+            new Field(5, 9),
+            new Field(6, 2),
+            new Field(7, 5),
+            new Field(8, 1),
+            new Field(9, 6)
+    );
+
     @Parameterized.Parameters(name = "{index}: Test with size={0}, expected fields={1}, board: {2}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
@@ -47,6 +119,11 @@ public class TestNQueensSolver {
                 {3, emptyList, ""},
                 {4, fieldsFor4, solutionFor4},
                 {5, emptyList, ""},
+                {6, emptyList, ""},
+                {7, emptyList, ""},
+                {8, fieldsFor8, solutionFor8},
+                {9, fieldsFor9, solutionFor9},
+                {10, fieldsFor10, solutionFor10},
         });
     }
 
@@ -63,6 +140,7 @@ public class TestNQueensSolver {
 
         if (fields.size() == 0) {
             assertTrue(solution.isEmpty());
+
         } else {
             assertTrue(solution.isPresent());
             Board board = solution.get();
